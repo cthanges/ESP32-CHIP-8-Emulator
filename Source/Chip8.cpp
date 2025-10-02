@@ -5,10 +5,9 @@
 #include <fstream>
 #include <random>
 
-
 const unsigned int FONTSET_SIZE = 80;
-const unsigned int FONTSET_START_ADDRESS = 0x50;
-const unsigned int START_ADDRESS = 0x200; // Program start at 0x200
+const unsigned int FONTSET_START_ADDRESS = 0x50; // Font set starts here
+const unsigned int START_ADDRESS = 0x200; // Program instructions from the ROM start here
 
 uint8_t fontset[FONTSET_SIZE] =
 	{
