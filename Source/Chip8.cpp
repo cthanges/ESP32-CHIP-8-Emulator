@@ -5,7 +5,7 @@
 #include <fstream>
 #include <random>
 
-const unsigned int FONTSET_SIZE = 80;
+const unsigned int FONTSET_SIZE = 80; // 16 characters * 5 bytes each 
 const unsigned int FONTSET_START_ADDRESS = 0x50; // Font set starts here
 const unsigned int START_ADDRESS = 0x200; // Program instructions from the ROM start here
 
@@ -34,7 +34,7 @@ Chip8::Chip8()
 	: randGen(std::chrono::system_clock::now().time_since_epoch().count())
 {
 	// Initialize PC
-	pc = START_ADDRESS;
+	pc = START_ADDRESS; // Set to 0x200; this is the first instruction to be executed
 
 	// Load fonts into memory
 	for (unsigned int i = 0; i < FONTSET_SIZE; ++i)
