@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <random>
 
-// CHIP-8 specifications
+// CHIP-8 Specifications
 const unsigned int KEY_COUNT = 16;
 const unsigned int MEMORY_SIZE = 4096;
 const unsigned int REGISTER_COUNT = 16;
@@ -26,6 +26,7 @@ private:
 	void TableE();
 	void TableF();
 
+	// CHIP-8 Instructions
 	// Do nothing
 	void OP_NULL();
 
