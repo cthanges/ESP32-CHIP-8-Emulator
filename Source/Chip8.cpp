@@ -167,6 +167,7 @@ void Chip8::TableF()
 	((*this).*(tableF[opcode & 0x00FFu]))();
 }
 
+// CHIP-8 Instructions
 void Chip8::OP_NULL()
 {}
 
