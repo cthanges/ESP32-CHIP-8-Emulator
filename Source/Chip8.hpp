@@ -27,14 +27,9 @@ private:
 	void TableF();
 
 	// CHIP-8 Instructions
-	// Do nothing
-	void OP_NULL();
-
-	// CLS
-	void OP_00E0();
-
-	// RET
-	void OP_00EE();
+	void OP_NULL(); // No operation
+	void OP_00E0(); // CLS (clear the display)
+	void OP_00EE(); // RET (return from a subroutine)
 
 	// JP address
 	void OP_1nnn();
