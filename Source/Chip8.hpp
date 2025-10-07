@@ -30,102 +30,38 @@ private:
 	void OP_NULL(); // No operation
 	void OP_00E0(); // CLS (clear the display)
 	void OP_00EE(); // RET (return from a subroutine)
-
-	// JP address
-	void OP_1nnn();
-
-	// CALL address
-	void OP_2nnn();
-
-	// SE Vx, byte
-	void OP_3xkk();
-
-	// SNE Vx, byte
-	void OP_4xkk();
-
-	// SE Vx, Vy
-	void OP_5xy0();
-
-	// LD Vx, byte
-	void OP_6xkk();
-
-	// ADD Vx, byte
-	void OP_7xkk();
-
-	// LD Vx, Vy
-	void OP_8xy0();
-
-	// OR Vx, Vy
-	void OP_8xy1();
-
-	// AND Vx, Vy
-	void OP_8xy2();
-
-	// XOR Vx, Vy
-	void OP_8xy3();
-
-	// ADD Vx, Vy
-	void OP_8xy4();
-
-	// SUB Vx, Vy
-	void OP_8xy5();
-
-	// SHR Vx
-	void OP_8xy6();
-
-	// SUBN Vx, Vy
-	void OP_8xy7();
-
-	// SHL Vx
-	void OP_8xyE();
-
-	// SNE Vx, Vy
-	void OP_9xy0();
-
-	// LD I, address
-	void OP_Annn();
-
-	// JP V0, address
-	void OP_Bnnn();
-
-	// RND Vx, byte
-	void OP_Cxkk();
-
-	// DRW Vx, Vy, height
-	void OP_Dxyn();
-
-	// SKP Vx
-	void OP_Ex9E();
-
-	// SKNP Vx
-	void OP_ExA1();
-
-	// LD Vx, DT
-	void OP_Fx07();
-
-	// LD Vx, K
-	void OP_Fx0A();
-
-	// LD DT, Vx
-	void OP_Fx15();
-
-	// LD ST, Vx
-	void OP_Fx18();
-
-	// ADD I, Vx
-	void OP_Fx1E();
-
-	// LD F, Vx
-	void OP_Fx29();
-
-	// LD B, Vx
-	void OP_Fx33();
-
-	// LD [I], Vx
-	void OP_Fx55();
-
-	// LD Vx, [I]
-	void OP_Fx65();
+	void OP_1NNN(); // JP addr (jump to address NNN)
+	void OP_2NNN(); // CALL addr (call subroutine at address NNN)
+	void OP_3XKK(); // SE Vx, byte (skip next instruction if Vx == kk)
+	void OP_4XKK(); // SNE Vx, byte (skip next instruction if Vx != kk)
+	void OP_5XY0(); // SE Vx, Vy (skip next instruction if Vx == Vy)
+	void OP_6XKK(); // LD Vx, byte (set Vx = KK)
+	void OP_7XKK(); // ADD Vx, byte (set Vx = Vx + KK)
+	void OP_8XY0(); // LD Vx, Vy (set Vx = Vy)
+	void OP_8XY1(); // OR Vx, Vy (set Vx = Vx | Vy)
+	void OP_8XY2(); // AND Vx, Vy (set Vx = Vx & Vy)
+	void OP_8XY3(); // XOR Vx, Vy (set Vx = Vx ^ Vy)
+	void OP_8XY4(); // ADD Vx, Vy (set Vx = Vx + Vy, set VF = carry) 
+	void OP_8XY5(); // SUB Vx, Vy (set Vx = Vx - Vy, set VF = NOT borrow)
+	void OP_8XY6(); // SHR Vx (set Vx = Vx >> 1, set VF = LSB before shift)
+	void OP_8XY7(); // SUBN Vx, Vy (set Vx = Vy - Vx, set VF = NOT borrow)
+	void OP_8XYE(); // SHL Vx (set Vx = Vx << 1, set VF = MSB before shift)
+	void OP_9XY0(); // SNE Vx, Vy (skip next instruction if Vx != Vy)
+	void OP_ANNN(); // LD I, addr (set I = NNN)
+	void OP_BNNN(); // JP V0, addr (jump to location V0 + NNN)
+	void OP_CXKK(); // RND Vx, byte (set Vx = random byte & KK)
+	void OP_DXYN(); // DRW Vx, Vy, nibble (display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision)
+	void OP_EX9E(); // SKP Vx (skip next instruction if key with Vx value is pressed)
+	void OP_EXA1(); // SKNP Vx (skip next instruction if key with Vx value is not pressed)
+	void OP_FX07(); // LD Vx, DT (set Vx = delay timer value)
+	void OP_FX0A(); // LD Vx, K (wait for a key press and store key value in Vx)
+	void OP_FX15(); // LD DT, Vx (set delay timer = Vx)
+	void OP_FX18(); // LD ST, Vx (set sound timer = Vx)
+	void OP_FX1E(); // ADD I, Vx (set I = I + Vx)
+	void OP_FX29(); // LD F, Vx (set I = location of sprite for digit Vx)
+	void OP_FX33(); // LD B, Vx (store BCD representation of Vx in memory locations I, I+1, and I+2)
+	void OP_FX55(); // LD [I], Vx (store registers V0 through Vx in memory starting at location I)
+	void OP_FX65(); // LD Vx, [I] (read registers V0 through Vx from memory starting at location I)
 
 	uint8_t memory[MEMORY_SIZE]{};
 	uint8_t registers[REGISTER_COUNT]{};
