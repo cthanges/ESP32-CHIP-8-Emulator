@@ -29,7 +29,6 @@ uint8_t fontset[FONTSET_SIZE] =
 		0xF0, 0x80, 0xF0, 0x80, 0x80  // F
 	};
 
-
 Chip8::Chip8()
 	: randGen(std::chrono::system_clock::now().time_since_epoch().count())
 {
@@ -47,19 +46,19 @@ Chip8::Chip8()
 
 	// Set up function pointer table
 	table[0x0] = &Chip8::Table0;
-	table[0x1] = &Chip8::OP_1nnn;
-	table[0x2] = &Chip8::OP_2nnn;
-	table[0x3] = &Chip8::OP_3xkk;
-	table[0x4] = &Chip8::OP_4xkk;
-	table[0x5] = &Chip8::OP_5xy0;
-	table[0x6] = &Chip8::OP_6xkk;
-	table[0x7] = &Chip8::OP_7xkk;
+	table[0x1] = &Chip8::OP_1NNN;
+	table[0x2] = &Chip8::OP_2NNN;
+	table[0x3] = &Chip8::OP_3XKK;
+	table[0x4] = &Chip8::OP_4XKK;
+	table[0x5] = &Chip8::OP_5XY0;
+	table[0x6] = &Chip8::OP_6XKK;
+	table[0x7] = &Chip8::OP_7XKK;
 	table[0x8] = &Chip8::Table8;
-	table[0x9] = &Chip8::OP_9xy0;
-	table[0xA] = &Chip8::OP_Annn;
-	table[0xB] = &Chip8::OP_Bnnn;
-	table[0xC] = &Chip8::OP_Cxkk;
-	table[0xD] = &Chip8::OP_Dxyn;
+	table[0x9] = &Chip8::OP_9XY0;
+	table[0xA] = &Chip8::OP_ANNN;
+	table[0xB] = &Chip8::OP_BNNN;
+	table[0xC] = &Chip8::OP_CXKK;
+	table[0xD] = &Chip8::OP_DXYN;
 	table[0xE] = &Chip8::TableE;
 	table[0xF] = &Chip8::TableF;
 
