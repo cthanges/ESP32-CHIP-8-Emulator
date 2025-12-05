@@ -2,7 +2,6 @@
 #include <glad/gl.h>
 #include <SDL.h>
 
-
 Platform::Platform(char const* title, int windowWidth, int windowHeight, int textureWidth, int textureHeight)
 {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -243,4 +242,3 @@ bool Platform::ProcessInput(uint8_t* keys)
 
 	return quit;
 }
-

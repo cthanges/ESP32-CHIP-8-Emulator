@@ -4,7 +4,6 @@
 #include <SDL.h>
 #include <glad/gl.h>
 
-
 class Platform
 {
 	friend class Imgui;
