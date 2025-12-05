@@ -21,6 +21,7 @@ public:
 	uint32_t video[VIDEO_WIDTH * VIDEO_HEIGHT]{};
 
 private:
+	// Secondary Tables
 	void Table0();
 	void Table8();
 	void TableE();
