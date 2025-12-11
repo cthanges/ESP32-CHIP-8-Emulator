@@ -1,4 +1,6 @@
 # ESP32 CHIP-8 Emulator
+Currently working on implementing the CHIP-8 Emulator onto an ESP32. Check out the [original](https://github.com/cthanges/ESP32-CHIP-8-Emulator/tree/original) branch to run this on your PC.
+
 ## References
 - [Building a CHIP-8 Emulator in C++ (Austin Morlan)](https://austinmorlan.com/posts/chip8_emulator/)
 
