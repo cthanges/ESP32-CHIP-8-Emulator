@@ -6,3 +6,4 @@
 - Micro SD Card Module (SPI interface) (this is for the ROM files)
 - Breadboard and jumper wires ✅
 - Power supply (USB or 3.7V LiPo battery)
+- Passive Piezo buzzer (for sound)
