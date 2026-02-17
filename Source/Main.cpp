@@ -20,6 +20,8 @@ int main(int argc, char** argv)
 	Chip8 chip8;
 	chip8.LoadROM(romFilename);
 
+	bool wasBeeping = false;
+
 	int videoPitch = sizeof(chip8.video[0]) * VIDEO_WIDTH;
 
 	auto lastCycleTime = std::chrono::high_resolution_clock::now();
@@ -38,7 +40,15 @@ int main(int argc, char** argv)
 
 			chip8.Cycle();
 
-			platform.Update(chip8.video, videoPitch);
+				// Start/stop beep depending on the sound timer
+				bool beeping = chip8.GetSoundTimer() > 0;
+				if (beeping != wasBeeping)
+				{
+					platform.Beep(beeping);
+					wasBeeping = beeping;
+				}
+
+				platform.Update(chip8.video, videoPitch);
 		}
 	}
 
