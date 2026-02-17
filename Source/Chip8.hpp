@@ -17,6 +17,8 @@ public:
 	void LoadROM(char const* filename);
 	void Cycle();
 
+	uint8_t GetSoundTimer() const { return soundTimer; } // Expose sound timer for audio playback
+
 	uint8_t keypad[KEY_COUNT]{};
 	uint32_t video[VIDEO_WIDTH * VIDEO_HEIGHT]{};
 

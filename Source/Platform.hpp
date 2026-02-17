@@ -10,9 +10,12 @@ public:
 	~Platform();
 	void Update(void const* buffer, int pitch);
 	bool ProcessInput(uint8_t* keys);
+	void Beep(bool on);
 
 private:
 	SDL_Window* window{};
 	SDL_Renderer* renderer{};
 	SDL_Texture* texture{};
+	SDL_AudioDeviceID audioDevice{};
+	int sampleNr{};
 };

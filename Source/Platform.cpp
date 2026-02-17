@@ -1,9 +1,29 @@
 #include "Platform.hpp"
 #include <SDL.h>
+#include <cmath>
+
+static const int AMPLITUDE = 28000;
+static const int SAMPLE_RATE = 44100;
+static const double TONE_FREQ = 440.0; // A4
+
+// Audio callback used by SDL to fill the audio buffer
+static void AudioCallback(void* user_data, Uint8* raw_buffer, int bytes)
+{
+	Sint16* buffer = (Sint16*)raw_buffer;
+	int length = bytes / 2; // 2 bytes per sample for AUDIO_S16SYS
+	int &sample_nr = *(int*)user_data;
+
+	for (int i = 0; i < length; ++i, ++sample_nr)
+	{
+		double time = (double)sample_nr / (double)SAMPLE_RATE;
+		const double PI = 3.14159265358979323846;
+		buffer[i] = (Sint16)(AMPLITUDE * sin(2.0 * PI * TONE_FREQ * time));
+	}
+}
 
 Platform::Platform(char const* title, int windowWidth, int windowHeight, int textureWidth, int textureHeight)
 {
-	SDL_Init(SDL_INIT_VIDEO);
+	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
 	window = SDL_CreateWindow(
 		title,
@@ -18,6 +38,27 @@ Platform::Platform(char const* title, int windowWidth, int windowHeight, int tex
 		SDL_PIXELFORMAT_RGBA8888,
 		SDL_TEXTUREACCESS_STREAMING,
 		textureWidth, textureHeight);
+
+	// Setup audio
+	SDL_AudioSpec want;
+	SDL_zero(want);
+	want.freq = SAMPLE_RATE;
+	want.format = AUDIO_S16SYS;
+	want.channels = 1;
+	want.samples = 2048;
+	want.callback = AudioCallback;
+	want.userdata = &sampleNr;
+
+	SDL_AudioSpec have;
+	audioDevice = SDL_OpenAudioDevice(NULL, 0, &want, &have, 0);
+	if (audioDevice == 0)
+	{
+		SDL_Log("Failed to open audio: %s", SDL_GetError());
+	}
+	else
+	{
+		SDL_PauseAudioDevice(audioDevice, 1); // Start paused; beep will unpause when needed
+	}
 }
 
 Platform::~Platform()
@@ -25,6 +66,10 @@ Platform::~Platform()
 	SDL_DestroyTexture(texture);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	if (audioDevice != 0)
+	{
+		SDL_CloseAudioDevice(audioDevice);
+	}
 	SDL_Quit();
 }
 
@@ -231,4 +276,19 @@ bool Platform::ProcessInput(uint8_t* keys)
 	}
 
 	return quit;
+}
+
+void Platform::Beep(bool on)
+{
+	if (audioDevice == 0)
+		return;
+	if (on)
+	{
+		SDL_PauseAudioDevice(audioDevice, 0); // Unpause/start
+	}
+	else
+	{
+		SDL_PauseAudioDevice(audioDevice, 1); // Pause/stop
+		sampleNr = 0; // Reset the sample number to start the tone from the beginning next time
+	}
 }
